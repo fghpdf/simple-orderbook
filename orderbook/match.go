@@ -104,3 +104,8 @@ func (e *MatchEngine) processTaker(ctx context.Context, takerOrder *Order,
 	}
 	return res
 }
+
+func (e *MatchEngine) String() string {
+	line := "\n-------\n"
+	return line + e.sellBook.String() + line + e.marketPrice.String() + line + e.buyBook.String()
+}

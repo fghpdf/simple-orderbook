@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fghpdf/simple-orderbook/orderbook"
+	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
 )
 
@@ -26,8 +27,6 @@ func main() {
 		{buy, 2082.34, 1},
 		{sell, 2087.6, 2},
 		{buy, 2087.8, 1},
-		{sell, 2087.6, 2},
-		{buy, 2087.8, 1},
 		{buy, 2085.01, 5},
 		{sell, 2088.02, 3},
 		{sell, 2087.60, 6},
@@ -46,13 +45,14 @@ func main() {
 
 	engine := orderbook.NewMatchEngine()
 	for _, order := range orders {
-		res := engine.ProcessOrder(context.Background(), order)
-		log.Println(res.TakerOrder.Direction, res.TakerOrder.Price, res.TakerOrder.Amount)
+		engine.ProcessOrder(context.Background(), order)
 	}
+	log.Println(engine)
 }
 
 func generateOrders(price float64, amount int64, dir orderbook.DirectionEnum) *orderbook.Order {
 	return &orderbook.Order{
+		Nonce:     uuid.New().String(),
 		Price:     decimal.NewFromFloat(price),
 		Amount:    decimal.NewFromInt(amount),
 		Direction: dir,

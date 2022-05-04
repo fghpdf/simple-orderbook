@@ -1,6 +1,7 @@
 package orderbook
 
 import (
+	"fmt"
 	"strings"
 
 	rbt "github.com/emirpasic/gods/trees/redblacktree"
@@ -43,6 +44,24 @@ func (ob *OrderBook) getTop() *Order {
 		return nil
 	}
 	return ob.book.Left().Value.(*Order)
+}
+
+func (ob *OrderBook) String() string {
+	if ob.book.Size() == 0 {
+		return "(empty)"
+	}
+	var orders []string
+	for _, value := range ob.book.Values() {
+		order := value.(*Order)
+		orders = append(orders, fmt.Sprintf("%s %s",
+			order.Price.String(), order.Amount.String()))
+	}
+	if ob.direction == DirectionEnumSell {
+		for i, j := 0, len(orders)-1; i < j; i, j = i+1, j-1 {
+			orders[i], orders[j] = orders[j], orders[i]
+		}
+	}
+	return strings.Join(orders, "\n")
 }
 
 func SellComparator(a, b interface{}) int {
