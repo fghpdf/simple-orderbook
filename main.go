@@ -15,7 +15,6 @@ const (
 	buy  = orderbook.DirectionEnumBuy
 )
 
-// 方向 价格 数量
 type testArg struct {
 	dir    orderbook.DirectionEnum
 	price  float64

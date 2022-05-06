@@ -109,3 +109,15 @@ func (e *MatchEngine) String() string {
 	line := "\n-------\n"
 	return line + e.sellBook.String() + line + e.marketPrice.String() + line + e.buyBook.String()
 }
+
+func (e *MatchEngine) GetPrice() decimal.Decimal {
+	return e.marketPrice
+}
+
+func (e *MatchEngine) GetSellBook() *OrderBook {
+	return e.sellBook
+}
+
+func (e *MatchEngine) GetBuyBook() *OrderBook {
+	return e.buyBook
+}
